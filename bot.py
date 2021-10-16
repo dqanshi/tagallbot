@@ -6,7 +6,7 @@ from telethon.tl.types import ChannelParticipantsAdmins
 
 
 
-Img = "https://telegra.ph/file/3865a19b537441bd98184.jpg"
+img = "https://telegra.ph/file/3865a19b537441bd98184.jpg"
 
 logging.basicConfig(
     level=logging.INFO,
