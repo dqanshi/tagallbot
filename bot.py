@@ -15,7 +15,24 @@ K = (
     "█░░║║║╠─║─║─║║║║║╠─░░█\n"
     "█░░╚╩╝╚╝╚╝╚╝╚╝╩─╩╚╝░░█\n"
     "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n"
-   " __**I'm MentionAll Bot**, I can mention almost all members in group or channel 👻\nClick **/help** for more information__\n\n "
+   " __**I'm MentionAll Bot**, I can mention almost all members in group or channel 👻\nClick **/help** for more information__\n\n @am_dq_fan"
+)
+
+helptext = (
+    "███████▄▄███████████▄\n"
+    "▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n"
+    "▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n"
+    "▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n"
+    "▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n"
+    "▓▓▓▓▓▓█░░░░░░░░░░░░░░█\n"
+    "▓▓▓▓▓▓███░░░░░░░░░░░░█\n"
+    "██████▀░░█░░░░██████▀\n"
+    "░░░░░░░░░█░░░░█\n"
+    "░░░░░░░░░░█░░░█\n"
+    "░░░░░░░░░░░█░░█\n"
+    "░░░░░░░░░░░█░░█\n"
+    "░░░░░░░░░░░░▀▀\n"
+"**Help Menu of MentionAllBot**\n\nCommand: /mentionall\n__You can use this command with text what you want to mention others.__\n`Example: /mentionall Good Morning!`\n__You can you this command as a reply to any message. Bot will tag users to that replied messsage__.\n\n"
 )
 
 
@@ -41,7 +58,6 @@ async def start(event):
                    )
 @client.on(events.NewMessage(pattern="^/help$"))
 async def help(event):
-  helptext = "**Help Menu of MentionAllBot**\n\nCommand: /mentionall\n__You can use this command with text what you want to mention others.__\n`Example: /mentionall Good Morning!`\n__You can you this command as a reply to any message. Bot will tag users to that replied messsage__.\n\n"
   await event.reply(helptext,
                     buttons=(
                       [Button.url('🧞‍♂️ owner', 'https://t.me/am_dq_fan'),
