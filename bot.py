@@ -1,5 +1,6 @@
 import os, logging, asyncio
 from telethon import Button
+from telethon import photo
 from telethon import TelegramClient, events
 from telethon.tl.types import ChannelParticipantsAdmins
 
