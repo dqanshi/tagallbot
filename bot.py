@@ -2,8 +2,6 @@ import os, logging, asyncio
 from telethon import Button
 from telethon import TelegramClient, events
 from telethon.tl.types import ChannelParticipantsAdmins
-from telegram import Message, Chat, Update, Bot, User
-from telegram.utils.helpers import escape_markdown
 
 
 
