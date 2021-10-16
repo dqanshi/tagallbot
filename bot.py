@@ -23,9 +23,9 @@ client = TelegramClient('client', api_id, api_hash).start(bot_token=bot_token)
 @client.on(events.NewMessage(pattern="^/start$"))
 async def start(event):
   await event.reply("
-                    photo=img
-                    caption= __**I'm MentionAll Bot**, I can mention almost all members in group or channel 👻\nClick **/help** for more information__\n\n",
-                    buttons=(
+              photo=img
+              caption= __**I'm MentionAll Bot**, I can mention almost all members in group or channel 👻\nClick **/help** for more information__\n\n",
+              buttons=(
                       [Button.url('🧞‍♂️ owner', 'https://t.me/am_dq_fan'),
                       Button.url('📦 Source', 'https://github.com/dqansh')]
                     ),
