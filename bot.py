@@ -21,7 +21,7 @@ client = TelegramClient('client', api_id, api_hash).start(bot_token=bot_token)
 
 @client.on(events.NewMessage(pattern="^/start$"))
 async def start(event):
-  Startext = " hi [🧞‍♀️]("https://telegra.ph/file/3865a19b537441bd98184.jpg"), _**I'm MentionAll Bot**, I can mention almost all members in group or channel 👻\nClick **/help** for more information__\n\n",
+  Startext = " hi [🧞‍♀️]("https://telegra.ph/file/3865a19b537441bd98184.jpg"), _**I'm MentionAll Bot**, I can mention almost all members in group or channel 👻\nClick **/help** for more information__\n\n"
   await event.reply("Startext, 
                     buttons=(
                       [Button.url('🧞‍♂️ owner', 'https://t.me/am_dq_fan'),
