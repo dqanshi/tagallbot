@@ -1,6 +1,5 @@
 import os, logging, asyncio
 from telethon import Button
-from telethon import Photo
 from telethon import TelegramClient, events
 from telethon.tl.types import ChannelParticipantsAdmins
 
@@ -22,7 +21,8 @@ client = TelegramClient('client', api_id, api_hash).start(bot_token=bot_token)
 
 @client.on(events.NewMessage(pattern="^/start$"))
 async def start(event):
-  await event.reply("__**I'm MentionAll Bot**, I can mention almost all members in group or channel 👻\nClick **/help** for more information__\n\n",
+  Startext = " hi [🧞‍♀️]("https://telegra.ph/file/3865a19b537441bd98184.jpg"), _**I'm MentionAll Bot**, I can mention almost all members in group or channel 👻\nClick **/help** for more information__\n\n",
+  await event.reply("Startext, 
                     buttons=(
                       [Button.url('🧞‍♂️ owner', 'https://t.me/am_dq_fan'),
                       Button.url('📦 Source', 'https://github.com/dqansh')]
@@ -32,7 +32,7 @@ async def start(event):
 @client.on(events.NewMessage(pattern="^/help$"))
 async def help(event):
   helptext = "**Help Menu of MentionAllBot**\n\nCommand: /mentionall\n__You can use this command with text what you want to mention others.__\n`Example: /mentionall Good Morning!`\n__You can you this command as a reply to any message. Bot will tag users to that replied messsage__.\n\n"
-  await event.reply_photo(img,helptext,
+  await event.reply(helptext,
                     buttons=(
                       [Button.url('🧞‍♂️ owner', 'https://t.me/am_dq_fan'),
                       Button.url('📦 Source', 'https://github.com/dqanshi')]
