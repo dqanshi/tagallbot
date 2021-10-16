@@ -2,12 +2,22 @@ import os, logging, asyncio
 from telethon import Button
 from telethon import TelegramClient, events
 from telethon.tl.types import ChannelParticipantsAdmins
+from telegram import Message, Chat, Update, Bot, User
+from telegram.utils.helpers import escape_markdown
 
 
+PM_START_TEXT = """
 
 
-img = "https://telegra.ph/file/3865a19b537441bd98184.jpg"
+┈┈┈┈╱▔▔▔▔╲┈┈┈┈
+┈┈┈▕▕╲┊┊╱▏▏┈┈┈
+┈┈┈▕▕▂╱╲▂▏▏┈┈┈
+┈┈┈┈╲┊┊┊┊╱┈┈┈┈
+┈┈┈┈▕╲▂▂╱▏┈┈┈┈
+╱▔▔▔▔┊┊┊┊▔▔▔▔╲
+HOI    {}, MY NAME IS {} !
 
+"""
 logging.basicConfig(
     level=logging.INFO,
     format='%(name)s - [%(levelname)s] - %(message)s'
@@ -21,7 +31,7 @@ client = TelegramClient('client', api_id, api_hash).start(bot_token=bot_token)
 
 @client.on(events.NewMessage(pattern="^/start$"))
 async def start(event):
-  await event.reply(""" https://telegra.ph/file/3865a19b537441bd98184.jpg, **I'm MentionAll Bot**, \nClick **/help** for more information__.\n\n""",  
+  await event.reply(  PM_START_TEXT.format(escape_markdown(first_name),
                     buttons=(
                       [Button.url('🧞‍♂️ owner', 'https://t.me/am_dq_fan'),
                       Button.url('📦 Source', 'https://github.com/dqansh')]
