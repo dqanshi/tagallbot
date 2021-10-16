@@ -21,7 +21,7 @@ client = TelegramClient('client', api_id, api_hash).start(bot_token=bot_token)
 
 @client.on(events.NewMessage(pattern="^/start$"))
 async def start(event):
-  await event.reply( HOI {}, MY NAME IS !.format(escape_markdown(first_name),
+  await event.reply(""" ___\n  /n  _/       \_\n /n  / |       | \\n/n/  |   |  \\n /n |/((o| |o))\|\n /n|      | |      |\n  /n|\     |_|     /|/n/n  | \           / |/n/n   \| /  _  \ |/\n /n \ | / _ \ | /\n/n     \_______/\n /n     _|_|_\n/n __|_|__/n/n/                   \  -- @am_dq_fan\n\n """
                     buttons=(
                       [Button.url('🧞‍♂️ owner', 'https://t.me/am_dq_fan'),
                       Button.url('📦 Source', 'https://github.com/dqansh')]
