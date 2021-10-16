@@ -21,7 +21,7 @@ client = TelegramClient('client', api_id, api_hash).start(bot_token=bot_token)
 
 @client.on(events.NewMessage(pattern="^/start$"))
 async def start(event):
-  await event.reply(""" https://telegra.ph/file/3865a19b537441bd98184.jpg, **I'm MentionAll Bot**, \nClick **/help** for more information__.\n\n"""), 
+  await event.reply(""" https://telegra.ph/file/3865a19b537441bd98184.jpg, **I'm MentionAll Bot**, \nClick **/help** for more information__.\n\n""",  
                     buttons=(
                       [Button.url('🧞‍♂️ owner', 'https://t.me/am_dq_fan'),
                       Button.url('📦 Source', 'https://github.com/dqansh')]
