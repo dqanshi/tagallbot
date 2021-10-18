@@ -15,7 +15,7 @@ K = (
     "█░░║║║╠─║─║─║║║║║╠─░░█\n"
     "█░░╚╩╝╚╝╚╝╚╝╚╝╩─╩╚╝░░█\n"
     "█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n"
-   " __**I'm MentionAll Bot**, I can mention almost all members in group or channel 👻\nClick **/help** for more information\n if you whatthis bot source contact @am_dq_fan \n\n"
+   " __**I'm MentionAll Bot**, I can mention almost all members in group or channel 👻\nClick **/help** for more information\n if you whant this bot source contact me on @am_dq_fan \n\n"
 )
 
 helptext = (
