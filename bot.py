@@ -51,9 +51,8 @@ client = TelegramClient('client', api_id, api_hash).start(bot_token=bot_token)
 async def start(event):
   await event.reply(K, 
                     buttons=(
-                      [Button.url('🧞‍♂️ owner', 'https://t.me/am_dq_fan'),
-                      Button.url('📦 Source', 'https://github.com/dqansh')] 
-                      [Button.url('♻️ add me', 'http://t.me/Miss_mention_bot?startgroup=true')]
+                      [Button.url('🧞‍♂️ owner', 'https://t.me/am_dq_fan'),   
+                      Button.url('♻️ add me', 'http://t.me/Miss_mention_bot?startgroup=true')]
                     ),
                     link_preview=False
                    )
@@ -62,7 +61,7 @@ async def help(event):
   await event.reply(helptext,
                     buttons=(
                       [Button.url('🧞‍♂️ owner', 'https://t.me/am_dq_fan'),
-                      Button.url('📦 Source', 'https://github.com/dqanshi')]
+                      Button.url('📦 Source', 'https://t.me/DQ_fanz')]
                     ),
                     link_preview=False
                    )
