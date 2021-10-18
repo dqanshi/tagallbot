@@ -52,8 +52,8 @@ async def start(event):
   await event.reply(K, 
                     buttons=(
                       [Button.url('🧞‍♂️ owner', 'https://t.me/am_dq_fan'),
-                      Button.url('📦 Source', 'https://github.com/dqansh'), 
-                      Button.url('♻️ add me', 'http://t.me/Miss_mention_bot?startgroup=true')]
+                      Button.url('📦 Source', 'https://github.com/dqansh')] 
+                      [Button.url('♻️ add me', 'http://t.me/Miss_mention_bot?startgroup=true')]
                     ),
                     link_preview=False
                    )
