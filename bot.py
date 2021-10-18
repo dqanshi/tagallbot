@@ -91,7 +91,7 @@ async def mentionall(event):
     return await event.respond("__Reply to a message or give me some text to mention others!__")
   
   if mode == "text_on_cmd":
-    usrnum = 6
+    usrnum = 0
     usrtxt = ""
     async for usr in client.iter_participants(event.chat_id):
       usrnum += 1
@@ -99,11 +99,11 @@ async def mentionall(event):
       if usrnum == 5:
         await client.send_message(event.chat_id, f"{usrtxt}\n\n{msg}")
         await asyncio.sleep(2)
-        usrnum = 6
+        usrnum = 0
         usrtxt = ""
         
   if mode == "text_on_reply":
-    usrnum = 6
+    usrnum = 0
     usrtxt = ""
     async for usr in client.iter_participants(event.chat_id):
       usrnum += 1
@@ -111,7 +111,7 @@ async def mentionall(event):
       if usrnum == 5:
         await client.send_message(event.chat_id, usrtxt, reply_to=msg)
         await asyncio.sleep(2)
-        usrnum = 6
+        usrnum = 0
         usrtxt = ""
         
 print(">> BOT STARTED <<")
