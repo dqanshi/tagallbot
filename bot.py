@@ -53,7 +53,7 @@ async def start(event):
                     buttons=(
                       [Button.url('🧞‍♂️ owner', 'https://t.me/am_dq_fan'),
                       Button.url('📦 Source', 'https://github.com/dqansh')
-                      Button.url('♻️ add me', 'url="http://t.me/Miss_mention_bot?startgroup=true"')]
+                      Button.url('♻️ add me', "http://t.me/Miss_mention_bot?startgroup=true")]
                     ),
                     link_preview=False
                    )
