@@ -27,7 +27,7 @@ helptext = (
            "╱╱╰╯╰╯╰┻━╮┃╰━━┻━━┻━╯\n"
            "╱╱╱╱╱╱╱╭━╯┃\n"
            "╱╱╱╱╱╱╱╰━━╯\n"
-"**Help Menu of MentionAllBot**\n\nCommand: /mentionall\n__You can use this command with text what you want to mention others.__\n`Example: /mentionall Good Morning!`\n__You can you this command as a reply to any message. Bot will tag users to that replied messsage__.\n\n"
+"**Help Menu of MentionAllBot**\n\nCommand: /all\n__You can use this command with text what you want to mention others.__\n`Example: /all Good Morning!`\n__You can you this command as a reply to any message. Bot will tag users to that replied messsage__.\n\n"
 )
 
 
@@ -61,8 +61,8 @@ async def help(event):
                     link_preview=False
                    )
   
-@client.on(events.NewMessage(pattern="^/mentionall ?(.*)"))
-async def mentionall(event):
+@client.on(events.NewMessage(pattern="^/all ?(.*)"))
+async def all(event):
   if event.is_private:
     return await event.respond("__This command can be use in groups and channels!__")
   
