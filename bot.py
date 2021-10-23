@@ -1,3 +1,8 @@
+import glob
+from pathlib import Path
+from tager.utils import load_plugins
+import logging
+from tager import Stark
 import os, logging, asyncio
 from telethon import Button
 from telethon import TelegramClient, events
@@ -35,6 +40,14 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(name)s - [%(levelname)s] - %(message)s'
 )
+path = "tager/plugins/*.py"
+files = glob.glob(path)
+for name in files:
+    with open(name) as a:
+        patt = Path(a.name)
+        plugin_name = patt.stem
+        load_plugins(plugin_name.replace(".py", ""))
+
 LOGGER = logging.getLogger(__name__)
 
 api_id = int(os.environ.get("APP_ID"))
@@ -108,6 +121,7 @@ async def all(event):
         await asyncio.sleep(2)
         usrnum = 0
         usrtxt = ""
+
         
 print(">> BOT STARTED <<")
 client.run_until_disconnected()
