@@ -1,5 +1,5 @@
 from telethon import events, Button, types
-from bot import Stark
+from bot import client as Stark
 from status import *
 from telethon.tl.types import ChannelParticipantsAdmins
 from datetime import timedelta
