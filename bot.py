@@ -2,7 +2,6 @@ import glob
 from pathlib import Path
 from tager.utils import load_plugins
 import logging
-from tager import Stark
 import os, logging, asyncio
 from telethon import Button
 from telethon import TelegramClient, events
