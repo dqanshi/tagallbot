@@ -1,7 +1,10 @@
 import os, logging, asyncio
 from telethon import Button
 from telethon import TelegramClient, events
-from telethon.tl.types import ChannelParticipantsAdmins
+from telethon.tl.types import ChannelParticipantAdmin
+from telethon.tl.types import ChannelParticipantCreator
+from telethon.tl.functions.channels import GetParticipantRequest
+from telethon.errors import UserNotParticipantError
 
 
 K = (
@@ -30,7 +33,6 @@ helptext = (
 "**Help Menu of MentionAllBot**\n\nCommand: /all\n__You can use this command with text what you want to mention others.__\n`Example: /all Good Morning!`\n__You can you this command as a reply to any message. Bot will tag users to that replied messsage__.\n\n"
 )
 
-
 logging.basicConfig(
     level=logging.INFO,
     format='%(name)s - [%(levelname)s] - %(message)s'
@@ -41,6 +43,8 @@ api_id = int(os.environ.get("APP_ID"))
 api_hash = os.environ.get("API_HASH")
 bot_token = os.environ.get("TOKEN")
 client = TelegramClient('client', api_id, api_hash).start(bot_token=bot_token)
+spam_chats = []
+
 
 @client.on(events.NewMessage(pattern="^/start$"))
 async def start(event):
