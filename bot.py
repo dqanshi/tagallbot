@@ -150,24 +150,32 @@ logging.basicConfig(level=logging.INFO, format="%(name)s - [%(levelname)s] - %(m
 LOGGER = logging.getLogger(__name__)
 
 
-# Event: When bot joins a group
+
+
+# Track groups when bot joins
 @client.on(events.ChatAction)
 async def track_groups(event):
-    if event.user_added or event.user_joined:
-        chat_id = event.chat_id
-        joined_groups.add(chat_id)
-        LOGGER.info(f"Bot added to group: {chat_id}")
+    chat_id = event.chat_id
+    joined_groups.add(chat_id)
+    LOGGER.info(f"Bot added to group: {chat_id}")
 
-# Event: When user starts bot in PM
+# Track users when they start the bot in PM
 @client.on(events.NewMessage(pattern="/start"))
 async def track_users(event):
     user_id = event.sender_id
     pm_users.add(user_id)
     await event.respond("Hello! You have started the bot.")
 
-# Broadcast function (Only for sudo users)
-@client.on(events.NewMessage(pattern="^/br$"))
-async def broadcast(event):
+# Function to send logs to sudo users
+async def send_error_log(error_msg):
+    for user_id in sudo:
+        try:
+            await client.send_message(user_id, f"⚠ **Bot Error:**\n\n```{error_msg}```")
+        except Exception as e:
+            LOGGER.error(f"Failed to send error log to {user_id}: {str(e)}")
+
+# Function to broadcast messages
+async def broadcast_message(event, send_to_groups=True, send_to_pm=True):
     sender_id = event.sender_id
 
     # Check if user is sudo
@@ -179,22 +187,59 @@ async def broadcast(event):
         return await event.respond("__Reply to a message or media to broadcast!__")
 
     msg = await event.get_reply_message()
+    count = 0  # Counter for messages sent
 
-    # Broadcast to groups
-    for group_id in joined_groups:
-        try:
-            await client.forward_messages(group_id, msg)
-        except Exception as e:
-            LOGGER.error(f"Failed to send to group {group_id}: {str(e)}")
+    # Send to groups if enabled
+    if send_to_groups:
+        for group_id in joined_groups:
+            try:
+                await client.send_message(group_id, msg)
+                count += 1
+            except ChatAdminRequiredError:
+                err_msg = f"Skipping group {group_id}: Bot is not an admin."
+                LOGGER.warning(err_msg)
+                await send_error_log(err_msg)
+            except ChatWriteForbiddenError:
+                err_msg = f"Skipping group {group_id}: Bot cannot send messages."
+                LOGGER.warning(err_msg)
+                await send_error_log(err_msg)
+            except Exception as e:
+                err_msg = f"Error in group {group_id}: {str(e)}"
+                LOGGER.error(err_msg)
+                await send_error_log(err_msg)
 
-    # Broadcast to PM users
-    for user_id in pm_users:
-        try:
-            await client.forward_messages(user_id, msg)
-        except Exception as e:
-            LOGGER.error(f"Failed to send to user {user_id}: {str(e)}")
+    # Send to PM users if enabled
+    if send_to_pm:
+        for user_id in pm_users:
+            try:
+                await client.forward_messages(user_id, msg)
+                count += 1
+            except FloodWaitError as e:
+                err_msg = f"Flood wait error ({e.seconds}s). Delaying broadcast..."
+                LOGGER.warning(err_msg)
+                await send_error_log(err_msg)
+                await asyncio.sleep(e.seconds)  # Wait if API limit is hit
+            except Exception as e:
+                err_msg = f"Error in PM to {user_id}: {str(e)}"
+                LOGGER.error(err_msg)
+                await send_error_log(err_msg)
 
-    await event.respond("✅ Broadcast sent to all groups and PM users.")
+    await event.respond(f"✅ Broadcast sent to {count} chats.")
+
+# Command: Broadcast to both groups & PM users
+@client.on(events.NewMessage(pattern="^/br$"))
+async def broadcast_all(event):
+    await broadcast_message(event, send_to_groups=True, send_to_pm=True)
+
+# Command: Broadcast to PM users only
+@client.on(events.NewMessage(pattern="^/brp$"))
+async def broadcast_pm(event):
+    await broadcast_message(event, send_to_groups=False, send_to_pm=True)
+
+# Command: Broadcast to groups only
+@client.on(events.NewMessage(pattern="^/brg$"))
+async def broadcast_groups(event):
+    await broadcast_message(event, send_to_groups=True, send_to_pm=False)
 
 
 
