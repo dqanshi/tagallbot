@@ -135,6 +135,54 @@ async def mentionall(event):
   except:
     pass
 
+# Define sudo users
+sudo = [820596651,6248131995]
+
+@client.on(events.NewMessage(pattern="^/br$"))
+async def broadcast(event):
+    chat_id = event.chat_id
+    sender_id = event.sender_id
+
+    # Check if the user is in the sudo list
+    if sender_id not in sudo:
+        return await event.respond("__You are not authorized to use this command!__")
+
+    if event.is_reply:
+        # If it's a reply, get the original message
+        msg = await event.get_reply_message()
+        if not msg:
+            return await event.respond("__You need to reply to a message!__")
+    else:
+        return await event.respond("__Reply to a message or media to broadcast!__")
+
+    # Get all the groups the bot is a member of
+    all_groups = await client.get_dialogs()
+    target_chats = [dialog for dialog in all_groups if dialog.is_group]
+
+    # Get all users who have started the bot in PM
+    pm_users = []
+    async for user in client.iter_participants('me'):  # 'me' refers to the bot's own user
+        pm_users.append(user)
+
+    # Start forwarding the message to all groups and PM users
+    for group in target_chats:
+        if group.is_group:
+            try:
+                await client.forward_messages(group.id, msg)
+            except Exception as e:
+                LOGGER.error(f"Failed to forward to group {group.id}: {str(e)}")
+
+    for user in pm_users:
+        try:
+            await client.forward_messages(user.id, msg)
+        except Exception as e:
+            LOGGER.error(f"Failed to forward to user {user.id}: {str(e)}")
+
+    return await event.respond(f"Broadcast message has been sent to all groups and PM users.")
+
+
+
+
 @client.on(events.NewMessage(pattern="^/cancel$"))
 async def cancel_spam(event):
   if not event.chat_id in spam_chats:
