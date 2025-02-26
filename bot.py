@@ -137,48 +137,66 @@ async def mentionall(event):
 
 # Define sudo users
 sudo = [820596651,6248131995]
+import os
+import logging
+import asyncio
 
+# Store groups and users in memory
+joined_groups = set()
+pm_users = set()
+
+# Logging setup
+logging.basicConfig(level=logging.INFO, format="%(name)s - [%(levelname)s] - %(message)s")
+LOGGER = logging.getLogger(__name__)
+
+
+# Event: When bot joins a group
+@client.on(events.ChatAction)
+async def track_groups(event):
+    if event.user_added or event.user_joined:
+        chat_id = event.chat_id
+        joined_groups.add(chat_id)
+        LOGGER.info(f"Bot added to group: {chat_id}")
+
+# Event: When user starts bot in PM
+@client.on(events.NewMessage(pattern="/start"))
+async def track_users(event):
+    user_id = event.sender_id
+    pm_users.add(user_id)
+    await event.respond("Hello! You have started the bot.")
+
+# Broadcast function (Only for sudo users)
 @client.on(events.NewMessage(pattern="^/br$"))
 async def broadcast(event):
-    chat_id = event.chat_id
     sender_id = event.sender_id
 
-    # Check if the user is in the sudo list
+    # Check if user is sudo
     if sender_id not in sudo:
         return await event.respond("__You are not authorized to use this command!__")
 
-    if event.is_reply:
-        # If it's a reply, get the original message
-        msg = await event.get_reply_message()
-        if not msg:
-            return await event.respond("__You need to reply to a message!__")
-    else:
+    # Ensure it's a reply
+    if not event.is_reply:
         return await event.respond("__Reply to a message or media to broadcast!__")
 
-    # Get all the groups the bot is a member of
-    all_groups = await client.get_dialogs()
-    target_chats = [dialog for dialog in all_groups if dialog.is_group]
+    msg = await event.get_reply_message()
 
-    # Get all users who have started the bot in PM
-    pm_users = []
-    async for user in client.iter_participants('me'):  # 'me' refers to the bot's own user
-        pm_users.append(user)
-
-    # Start forwarding the message to all groups and PM users
-    for group in target_chats:
-        if group.is_group:
-            try:
-                await client.forward_messages(group.id, msg)
-            except Exception as e:
-                LOGGER.error(f"Failed to forward to group {group.id}: {str(e)}")
-
-    for user in pm_users:
+    # Broadcast to groups
+    for group_id in joined_groups:
         try:
-            await client.forward_messages(user.id, msg)
+            await client.forward_messages(group_id, msg)
         except Exception as e:
-            LOGGER.error(f"Failed to forward to user {user.id}: {str(e)}")
+            LOGGER.error(f"Failed to send to group {group_id}: {str(e)}")
 
-    return await event.respond(f"Broadcast message has been sent to all groups and PM users.")
+    # Broadcast to PM users
+    for user_id in pm_users:
+        try:
+            await client.forward_messages(user_id, msg)
+        except Exception as e:
+            LOGGER.error(f"Failed to send to user {user_id}: {str(e)}")
+
+    await event.respond("✅ Broadcast sent to all groups and PM users.")
+
+
 
 
 
